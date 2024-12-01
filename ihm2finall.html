@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Enhanced Magic Drawing Board</title>
+    <style>
+        :root {
+            --primary-boy: #4a90e2;
+            --primary-girl: #ff69b4;
+        }
+        
+
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Arial', sans-serif;
+            background: #f0f0f0;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .theme-boy {
+            --theme-color: var(--primary-boy);
+            --theme-light: #cce4ff;
+           background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcHFIBFtu4vIChGz5VJcQ0uHqpc7vP7igxfU_iKjpC0yb-3aZdH1LbY87cbdSwjTI2yqg&usqp=CAU');
+  
+         }
+
+        .theme-girl {
+            --theme-color: var(--primary-girl);
+            --theme-light: #ffe6f3;
+background-image: url('data:image/jpeg;base64,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');
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: var(--theme-color);
+            border-radius: 15px;
+            margin-bottom: 20px;
+            color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .theme-switch {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            background: white;
+            margin: 0 5px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .theme-switch:hover {
+            transform: scale(1.05);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .toolbar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .tool-btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: var(--theme-light);
+            color: #333;
+            font-size: 16px;
+            transition: all 0.2s;
+            min-width: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .tool-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .tool-btn.active {
+            background: var(--theme-color);
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .color-picker {
+            width: 50px;
+            height: 40px;
+            padding: 0;
+            border: 2px solid var(--theme-color);
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .line-width {
+            width: 100px;
+            margin: 0 10px;
+            vertical-align: middle;
+        }
+
+        #canvas {
+            border: 3px solid var(--theme-color);
+            border-radius: 15px;
+            background: white;
+            cursor: crosshair;
+            box-shadow: 0 4px 8px rgba(0,0,0,10);
+            transition: box-shadow 0.3s ease;
+            touch-action: none;
+        }
+
+        #canvas:hover {
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: space-between;
+         
+          }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            min-width: 300px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .help-list {
+            padding-left: 20px;
+        }
+
+        .help-list li {
+            margin: 10px 0;
+            line-height: 1.5;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: white;
+            min-width: 160px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            border-radius: 8px;
+            z-index: 1;
+        }
+
+        .dropdown-content button {
+            width: 100%;
+            padding: 12px 16px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            text-align: left;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dropdown-content button:hover {
+            background: var(--theme-light);
+        }
+
+        .dropdown-content button::after {
+            font-size: 0.8em;
+            color: #666;
+            margin-left: 10px;
+        }
+
+        .dropdown-content button:first-child::after {
+            content: "Ctrl+S";
+        }
+
+        .shortcut-hint {
+            color: #666;
+            font-size: 12px;
+            margin-top: 5px;
+        } 
+
+        .text-input-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+
+        .text-input-modal input,
+        .text-input-modal select {
+            margin: 10px 0;
+            padding: 5px;
+            width: 100%;
+        }
+
+        #fontSelect {
+            margin: 5px 0;
+            padding: 5px;
+        }
+
+        #textSizeInput {
+            width: 100px;
+        }
+
+        audio {
+            width: 200px;
+            height: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .toolbar {
+                gap: 5px;
+            }
+
+            .tool-btn {
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+    </style>
+</head>
+<body class="theme-boy">
+    <!-- Previous HTML remains the same until toolbar -->
+    <div class="container">
+        <div class="header">
+            <h1>🪄 MAGIC DRAWING BOARD 🖌️</h1>
+            <div>
+                <button class="theme-switch" onclick="setTheme('boy')">👦 Boy Theme</button>
+                <button class="theme-switch" onclick="setTheme('girl')">👧 Girl Theme</button>
+            </div>
+        </div>
+   <div class="toolbar">
+            <button class="tool-btn" onclick="setShape('pencil')" title="Free drawing">✏️</button>
+            <button class="tool-btn" onclick="setShape('eraser')" title="Erase parts of drawing">🧹</button>
+            <button class="tool-btn" onclick="setShape('circle')" title="Draw circle">🔴</button>
+            <button class="tool-btn" onclick="setShape('rectangle')" title="Draw rectangle">🟥</button>
+            <button class="tool-btn" onclick="setShape('triangle')" title="Draw triangle">🔺</button>
+            <button class="tool-btn" onclick="setShape('star')" title="Draw star">⭐</button>
+            <button class="tool-btn" onclick="setShape('cloud')" title="Draw cloud">☁️</button>
+            <button class="tool-btn" onclick="setShape('line')" title="Draw line">📏</button>
+            <button class="tool-btn" onclick="showTextInput()" title="Add text">📝</button>
+            <input type="color" class="color-picker" onchange="setColor(this.value)" value="#000000" title="Choose color">
+            <input type="range" min="1" max="50" value="2" class="line-width" onchange="setLineWidth(this.value)" title="Line Width">
+            
+            <div class="dropdown">
+                <button class="tool-btn" onclick="toggleDropdown('fileDropdown')">📁 File</button>
+                <div class="dropdown-content" id="fileDropdown">
+                    <button onclick="saveDrawing()">💾 Save as Image</button>
+                    <button onclick="saveDraft()">📝 Save as Draft</button>
+                    <button onclick="showDrafts()">📂 Load Draft</button>
+                    <button onclick="shareDrawing()">📤 Share</button>
+                </div>
+            </div>
+
+            <button class="tool-btn" onclick="undo()" title="Undo last action">↩️</button>
+            <button class="tool-btn" onclick="redo()" title="Redo last action">↪️</button>
+            <button class="tool-btn" onclick="showHelp()">⁉️ Help</button>
+            <button class="tool-btn" onclick="confirmClear()">🗑️ Clear</button>
+        </div>
+
+        
+
+        
+        <div id="textInputModal" class="text-input-modal">
+            <h3>Add Text</h3>
+            <input type="text" id="textInput" placeholder="Enter your text">
+            <select id="fontSelect">
+                <option value="Arial">Arial</option>
+                <option value="Times New Roman">Times New Roman</option>
+                <option value="Comic Sans MS">Comic Sans MS</option>
+                <option value="Impact">Impact</option>
+            </select>
+            <input type="number" id="textSizeInput" value="20" min="8" max="72">
+            <button class="tool-btn" onclick="addText()">Add Text</button>
+            <button class="tool-btn" onclick="closeTextInput()">Cancel</button>
+        </div>
+
+      
+        <div id="helpModal" class="modal">
+            <div class="modal-content">
+                <h2>How to Use the Drawing Board</h2>
+                <ol class="help-list">
+                    <li>Choose a tool from the toolbar</li>
+                    <li>Select a color using the color picker</li>
+                    <li>Adjust line width using the slider</li>
+                    <li>Click and drag on the canvas to draw</li>
+                    <li>Save your work as draft to continue later</li>
+                    <li>Use Ctrl+Z to undo and Ctrl+Shift+Z to redo</li>
+                </ol>
+               <button class="tool-btn" onclick="closeHelp()">Got it!</button>
+            </div>
+        </div>
+
+        <!-- Clear Confirmation Modal -->
+        <div id="clearModal" class="modal">
+            <div class="modal-content">
+                <h2>Clear Drawing?</h2>
+                <p>Do you want to save this drawing as a draft before clearing?</p>
+                <button class="tool-btn" onclick="handleClearWithDraft(true)">Save as Draft & Clear</button>
+                <button class="tool-btn" onclick="handleClearWithDraft(false)">Clear Without Saving</button>
+                <button class="tool-btn" onclick="closeModal('clearModal')">Cancel</button>
+            </div>
+        </div>
+
+        
+        <div id="draftsModal" class="modal">
+            <div class="modal-content">
+                <h2>Saved Drafts</h2>
+                <div id="draftsList"></div>
+                <button class="tool-btn" onclick="closeModal('draftsModal')">Close</button>
+            </div>
+        </div>
+
+       <canvas id="canvas"></canvas>
+    </div>
+
+    <script>
+        
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        let currentShape = 'pencil';
+        let isDrawing = false;
+        let startX, startY;
+        let drawingHistory = [];
+        let historyIndex = -1;
+        let lineWidth = 2;
+        let lastDrawing = null;
+        let currentColor = '#000000';
+        let drafts = JSON.parse(localStorage.getItem('drawingDrafts')) || [];
+        function showTextInput() {
+            document.getElementById('textInputModal').style.display = 'block';
+            isAddingText = true;
+        }
+
+        function closeTextInput() {
+            document.getElementById('textInputModal').style.display = 'none';
+            isAddingText = false;
+        }
+
+        function addText() {
+            const text = document.getElementById('textInput').value;
+            const font = document.getElementById('fontSelect').value;
+            const size = document.getElementById('textSizeInput').value;
+            
+            if (text) {
+                currentFont = font;
+                currentTextSize = size;
+                currentShape = 'text';
+                closeTextInput();
+                
+                canvas.addEventListener('click', function textClickHandler(e) {
+                    const rect = canvas.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    ctx.font = `${currentTextSize}px ${currentFont}`;
+                    ctx.fillStyle = currentColor;
+                    ctx.fillText(text, x, y);
+                    
+                    saveToHistory();
+                    canvas.removeEventListener('click', textClickHandler);
+                    currentShape = 'pencil';
+                }, { once: true });
+            }
+        }
+
+       
+      
+
+        // Canvas resize function
+        function resizeCanvas() {
+            const width = canvas.parentElement.clientWidth - 10;
+            const height = window.innerHeight - 230;
+            canvas.width = width;
+            canvas.height = height;
+            ctx.lineWidth = lineWidth;
+            ctx.strokeStyle = currentColor;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            if (drawingHistory.length > 0) {
+                restoreDrawing();
+            }
+        }
+
+        function saveDraft(name = null) {
+            const draftName = name || prompt('Enter a name for this draft:', 'Draft ' + (drafts.length + 1));
+            if (draftName) {
+                const draft = {
+                    id: Date.now(),
+                    name: draftName,
+                    data: canvas.toDataURL(),
+                    date: new Date().toLocaleString()
+                };
+                drafts.push(draft);
+                localStorage.setItem('drawingDrafts', JSON.stringify(drafts));
+                return true;
+            }
+            return false;
+        }
+
+        function loadDraft(draftId) {
+            const draft = drafts.find(d => d.id === draftId);
+            if (draft) {
+                const img = new Image();
+                img.src = draft.data;
+                img.onload = () => {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.drawImage(img, 0, 0);
+                    saveToHistory();
+                    closeModal('draftsModal');
+                };
+            }
+        }
+
+        function deleteDraft(draftId) {
+            if (confirm('Are you sure you want to delete this draft?')) {
+                drafts = drafts.filter(d => d.id !== draftId);
+                localStorage.setItem('drawingDrafts', JSON.stringify(drafts));
+                showDrafts(); 
+            }
+        }
+
+        function showDrafts() {
+            const draftsList = document.getElementById('draftsList');
+            draftsList.innerHTML = '';
+            if (drafts.length === 0) {
+                draftsList.innerHTML = '<p>No saved drafts</p>';
+            } else {
+                drafts.forEach(draft => {
+                    const draftElement = document.createElement('div');
+                    draftElement.innerHTML = `
+                        <div class="draft-item">
+                            <span>${draft.name}</span>
+                            <span>${draft.date}</span>
+                            <button onclick="loadDraft(${draft.id})">Load</button>
+                            <button onclick="deleteDraft(${draft.id})">Delete</button>
+                        </div>
+                    `;
+                    draftsList.appendChild(draftElement);
+                });
+            }
+            document.getElementById('draftsModal').style.display = 'block';
+        }
+
+        function showModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function handleClearWithDraft(shouldSaveDraft) {
+            if (shouldSaveDraft) {
+                if (saveDraft()) {
+                    clearCanvas();
+                }
+            } else {
+                clearCanvas();
+            }
+            closeModal('clearModal');
+        }
+
+        
+        function setShape(shape) {
+            currentShape = shape;
+            const buttons = document.querySelectorAll('.tool-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        function setColor(color) {
+            currentColor = color;
+            ctx.strokeStyle = color;
+        }
+
+        function setLineWidth(width) {
+            lineWidth = width;
+            ctx.lineWidth = width;
+        }
+
+        function startDrawing(e) {
+            isDrawing = true;
+            const rect = canvas.getBoundingClientRect();
+            startX = e.clientX - rect.left;
+            startY = e.clientY - rect.top;
+            ctx.beginPath();
+            ctx.moveTo(startX, startY);
+            lastDrawing = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            if (currentShape === 'pencil') {
+                ctx.lineTo(x, y);
+                ctx.stroke();
+            } else if (currentShape === 'eraser') {
+                ctx.save();
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.beginPath();
+                ctx.arc(x, y, lineWidth * 2, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            } else {
+                if (lastDrawing) {
+                    ctx.putImageData(lastDrawing, 0, 0);
+                }
+                drawShape(x, y);
+            }
+        }
+
+        function drawShape(x, y) {
+            ctx.beginPath();
+            switch(currentShape) {
+                case 'rectangle':
+                    ctx.rect(startX, startY, x - startX, y - startY);
+                    break;
+                case 'circle':
+                    const radius = Math.sqrt(Math.pow(x - startX, 2) + Math.pow(y - startY, 2));
+                    ctx.arc(startX, startY, radius, 0, 2 * Math.PI);
+                    break;
+                case 'triangle':
+                    ctx.moveTo(startX + (x - startX) / 2, startY);
+                    ctx.lineTo(x, y);
+                    ctx.lineTo(startX, y);
+                    ctx.closePath();
+                    break;
+                case 'line':
+                    ctx.moveTo(startX, startY);
+                    ctx.lineTo(x, y);
+                    break;
+                case 'star':
+                    drawStar(ctx, startX, startY, x, y);
+                    break;
+                case 'cloud':
+                    drawCloud(ctx, startX, startY, x, y);
+                    break;
+            }
+            ctx.stroke();
+        }
+  
+
+       
+        function stopDrawing() {
+            if (isDrawing) {
+                isDrawing = false;
+                lastDrawing = null;
+                saveToHistory();
+            }
+        }
+
+        
+        function saveToHistory() {
+            drawingHistory = drawingHistory.slice(0, historyIndex + 1);
+            drawingHistory.push(canvas.toDataURL());
+            historyIndex++;
+        }
+
+        function restoreDrawing() {
+            if (historyIndex >= 0) {
+                const img = new Image();
+                img.src = drawingHistory[historyIndex];
+                img.onload = () => {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.drawImage(img, 0, 0);
+                };
+            } else {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+        }
+
+        function undo() {
+            if (historyIndex > 0) {
+                historyIndex--;
+                restoreDrawing();
+            }
+        }
+
+        function redo() {
+            if (historyIndex < drawingHistory.length - 1) {
+                historyIndex++;
+                restoreDrawing();
+            }
+        }
+
+        // Shape Helper Functions
+        function drawStar(context, startX, startY, endX, endY) {
+            const radius = Math.sqrt(Math.pow(endX - startX, 2) + Math.pow(endY - startY, 2));
+            const outerRadius = radius;
+            const innerRadius = radius * 0.4;
+            const spikes = 5;
+            
+            for (let i = 0; i < spikes * 2; i++) {
+                const r = i % 2 === 0 ? outerRadius : innerRadius;
+                const angle = (i * Math.PI) / spikes - Math.PI / 2;
+                const x = startX + Math.cos(angle) * r;
+                const y = startY + Math.sin(angle) * r;
+                
+                if (i === 0) {
+                    context.moveTo(x, y);
+                } else {
+                    context.lineTo(x, y);
+                }
+            }
+            context.closePath();
+        }
+
+  function drawCloud(context, startX, startY, endX, endY) {
+            const width = Math.abs(endX - startX);
+            const height = Math.abs(endY - startY);
+            const size = Math.min(width, height);
+            
+            context.beginPath();
+            context.moveTo(startX + size * 0.3, startY + size * 0.5);
+            context.bezierCurveTo(
+                startX, startY + size * 0.5,
+                startX, startY + size * 0.3,
+                startX + size * 0.3, startY + size * 0.3
+            );
+            context.bezierCurveTo(
+                startX + size * 0.3, startY,
+                startX + size * 0.7, startY,
+                startX + size * 0.7, startY + size * 0.3
+            );
+            context.bezierCurveTo(
+                startX + size, startY + size * 0.3,
+                startX + size, startY + size * 0.5,
+                startX + size * 0.7, startY + size * 0.5
+            );
+            context.closePath();
+        }
+
+        
+        function saveDrawing() {
+            const link = document.createElement('a');
+            link.download = 'drawing.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+
+        function shareDrawing() {
+            if (navigator.share) {
+                canvas.toBlob(async (blob) => {
+                    const file = new File([blob], 'drawing.png', { type: 'image/png' });
+                    try {await navigator.share({
+                            files: [file],
+                            title: 'My Drawing',
+                            text: 'Check out my drawing!'
+                        });
+                    } catch (error) {
+                        alert('Error sharing: ' + error.message);
+                    }
+                });
+            } else {
+                alert('Sharing is not supported on this browser');
+            }
+        }
+
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawingHistory = [];
+            historyIndex = -1;
+            saveToHistory();
+        }
+
+        function confirmClear() {
+            showModal('clearModal');
+        }
+
+        function toggleDropdown(dropdownId) {
+            const dropdown = document.getElementById(dropdownId);
+            const allDropdowns = document.querySelectorAll('.dropdown-content');
+            allDropdowns.forEach(d => {
+                if (d.id !== dropdownId) {
+                    d.style.display = 'none';
+                }
+            });
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        }
+
+       
+        function setTheme(theme) {
+            document.body.className = `theme-${theme}`;
+            const buttons = document.querySelectorAll('.theme-switch');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        // Event Listeners
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mouseout', stopDrawing);
+
+        // Touch Events Support
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const mouseEvent = new MouseEvent('mousedown', {
+                clientX: touch.clientX,
+                clientY: touch.clientY
+            });
+            canvas.dispatchEvent(mouseEvent);
+        });
+
+        canvas.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const mouseEvent = new MouseEvent('mousemove', {
+                clientX: touch.clientX,
+                clientY: touch.clientY
+            });
+            canvas.dispatchEvent(mouseEvent);
+        });
+
+        canvas.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            const mouseEvent = new MouseEvent('mouseup', {});
+            canvas.dispatchEvent(mouseEvent);
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 'z') {
+                if (e.shiftKey) {
+                    redo();
+                } else {
+                    undo();
+                }
+                e.preventDefault();
+            } else if (e.ctrlKey && e.key === 's') {
+                saveDrawing();
+                e.preventDefault();
+            }
+        });
+
+        // Close dropdowns when clicking outside
+        window.addEventListener('click', (e) => {
+            if (!e.target.matches('.tool-btn')) {
+                const dropdowns = document.querySelectorAll('.dropdown-content');
+                dropdowns.forEach(dropdown => {
+                    if (dropdown.style.display === 'block') {
+                        dropdown.style.display = 'none';
+                    }
+                });
+            }
+        });
+
+function showHelp() {
+    document.getElementById('helpModal').style.display = 'block';
+}
+
+function closeHelp() {
+    document.getElementById('helpModal').style.display = 'none';
+}
+
+
+        
+
+        // Initialize
+        window.addEventListener('load', () => {
+            resizeCanvas();
+            setLineWidth(2);
+            setColor('#000000');
+            saveToHistory();
+        });
+
+        window.addEventListener('resize', resizeCanvas);
+
+
+
+    </script>
+</body>
+</html>
